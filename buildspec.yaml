@@ -1,0 +1,36 @@
+version: 0.2
+
+env:
+  variables:
+    PACKAGE: "aws-apigw-lambda-dynamodb-golang/src"
+
+phases:
+  install:
+    runtime-versions:
+      golang: 1.14
+    commands:
+      # AWS Codebuild Go images use /go for the $GOPATH so let's copy our
+      # application source code into that directory structure.
+      - mkdir -p "/go/src/$(dirname ${PACKAGE})"
+      - ln -s "${CODEBUILD_SRC_DIR}" "/go/src/${PACKAGE}"
+      # Install golint
+      #- go get -u github.com/golang/lint/golint
+  build:
+    commands:
+      # Make sure we're in the project directory within our GOPATH
+      - cd "/go/src/${PACKAGE}"
+      # Fetch all dependencies
+      - go get -t ./...
+      # Ensure code passes all lint tests
+      #- golint -set_exit_status
+      # Check the Go code for common problems with 'go vet'
+      - go vet .
+      # Run all tests included with our application
+      #- go test .
+      # Build our go application
+      - aws cloudformation package --debug --template template.yaml --s3-bucket $S3_BUCKET --output-template template-export.yaml
+artifacts:
+  type: zip
+  files:
+    - template-export.yaml
+
