@@ -32,7 +32,7 @@ phases:
       # Build our go application
       - pwd
       - ls -ltr
-      - aws cloudformation package --debug --template ../template.yaml --s3-bucket $S3_BUCKET --output-template ../template-export.yaml
+      - aws cloudformation package --debug --template ../template.yaml --s3-bucket $S3_BUCKET --output-template template-export.yaml
 artifacts:
   type: zip
   files:
