@@ -13,7 +13,7 @@ phases:
       # application source code into that directory structure.
       - ls -ltr
       - mkdir -p "/go/src/$(dirname ${PACKAGE})"
-      - cp . "/go/src/$(dirname ${PACKAGE})"
+      - cp -r . "/go/src/$(dirname ${PACKAGE})"
       - ln -s "${CODEBUILD_SRC_DIR}" "/go/src/${PACKAGE}"
       # Install golint
       #- go get -u github.com/golang/lint/golint
