@@ -5,10 +5,6 @@ Description: aws-apigw-lambda-dynamodb-golang
 Parameters:
   ExecutionRole:
     Type: String
-  PreTrafficHookExecutionRole:
-    Type: String
-  CodeDeployExecutionRole:
-    Type: String
 
 Globals:
   Api:
