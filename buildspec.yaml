@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    PACKAGE: "aws-apigw-lambda-dynamodb-golang/src"
+    PACKAGE: "aws-apigw-lambda-dynamodb-golang"
 
 phases:
   install:
@@ -32,7 +32,7 @@ phases:
       # Build our go application
       - pwd
       - ls -ltr
-      - aws cloudformation package --debug --template ../template.yaml --s3-bucket $S3_BUCKET --output-template-file template-export.yaml
+      - aws cloudformation package --debug --template-file template.yaml --s3-bucket $S3_BUCKET --output-template-file template-export.yaml
       - ls -ltr
 artifacts:
   files:
