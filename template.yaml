@@ -45,7 +45,7 @@ Resources:
                   default:
                     statusCode: "200"
                 uri:
-                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DemoLambda.Arn}:live/invocations"
+                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/pkg/${DemoLambda.Arn}:live/invocations"
                 passthroughBehavior: "when_no_match"
                 httpMethod: "POST"
                 contentHandling: "CONVERT_TO_TEXT"
@@ -55,7 +55,7 @@ Resources:
     Type: 'AWS::Serverless::Function'
     Properties:
       FunctionName: "DemoGoLambda"
-      Handler: src/main
+      Handler: main
       Runtime: go1.x
       Description: 'Go Lambda'
       MemorySize: 128
