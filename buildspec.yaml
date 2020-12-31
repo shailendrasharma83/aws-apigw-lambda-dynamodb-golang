@@ -12,15 +12,14 @@ phases:
       # AWS Codebuild Go images use /go for the $GOPATH so let's copy our
       # application source code into that directory structure.
       - ls -ltr
-      - mkdir -p "/go/pkg/$(dirname ${PACKAGE})"
-      - cp -r . "/go/pkg/$(dirname ${PACKAGE})"
-      - ln -s "${CODEBUILD_SRC_DIR}" "/go/pkg/${PACKAGE}"
+      - mkdir -p "/go/src/$(dirname ${PACKAGE})"
+      - ln -s "${CODEBUILD_SRC_DIR}" "/go/src/${PACKAGE}"
       # Install golint
       #- go get -u github.com/golang/lint/golint
   build:
     commands:
       # Make sure we're in the project directory within our GOPATH
-      - cd "/go/pkg/${PACKAGE}"
+      - cd "/go/src/${PACKAGE}"
       # Fetch all dependencies
       - go get -v all
       # Run all tests included with our application
@@ -30,6 +29,7 @@ phases:
       - ls -ltr
       - GOOS=linux go build -o build/main cmd/main.go
       - aws cloudformation package --debug --template-file template.yaml --s3-bucket $S3_BUCKET --output-template-file template-export.yaml
+      - pwd
       - ls -ltr
 artifacts:
   files:
