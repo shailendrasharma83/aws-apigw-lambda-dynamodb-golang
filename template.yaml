@@ -55,7 +55,7 @@ Resources:
     Type: 'AWS::Serverless::Function'
     Properties:
       FunctionName: "DemoGoLambda"
-      Handler: main
+      Handler: build/main
       Runtime: go1.x
       Description: 'Go Lambda'
       MemorySize: 128
